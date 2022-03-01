@@ -1,3 +1,3 @@
-### 📝 noty
+📝 noty
 
-in progress...
+a minimalist block based note taking tool.
