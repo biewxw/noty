@@ -5,6 +5,7 @@ import { cloneDeep, find, findIndex, set } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import Head from 'next/head';
 
 import { Block, Page } from '@/types';
 
@@ -124,92 +125,97 @@ const Page: NextPage = () => {
   }, [focusedBlock]);
 
   return (
-    <Flex
-      css={{
-        width: '100%',
-        height: '100%',
-        background: '$gray900',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'auto',
-        backgroundImage: 'radial-gradient(#131313 1px, transparent 0)',
-        backgroundSize: '8px 8px',
-        backgroundPosition: '-19px -19px',
-        position: 'relative',
-      }}
-    >
-      <NextLink passHref href="/pages">
-        <Flex
-          css={{
-            top: '16px',
-            left: '16px',
-            color: '$gray500',
-            cursor: 'pointer',
-            border: '1px solid $gray800',
-            padding: '$sm',
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transitionDuration: '0.2s',
-
-            '&:hover': {
-              border: '1px solid $gray700',
-            },
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8.81809 4.18179C8.99383 4.35753 8.99383 4.64245 8.81809 4.81819L6.13629 7.49999L8.81809 10.1818C8.99383 10.3575 8.99383 10.6424 8.81809 10.8182C8.64236 10.9939 8.35743 10.9939 8.1817 10.8182L5.1817 7.81819C5.09731 7.73379 5.0499 7.61933 5.0499 7.49999C5.0499 7.38064 5.09731 7.26618 5.1817 7.18179L8.1817 4.18179C8.35743 4.00605 8.64236 4.00605 8.81809 4.18179Z"
-              fill="currentColor"
-              fillRule="evenodd"
-              clipRule="evenodd"
-            />
-          </svg>
-        </Flex>
-      </NextLink>
+    <>
+      <Head>
+        <title>noty - {getCurrentPage?.title || 'untitled'}</title>
+      </Head>
       <Flex
         css={{
           width: '100%',
           height: '100%',
-          maxWidth: '720px',
-          padding: '$lg $md',
-          flexDirection: 'column',
-          gridGap: '$sm',
+          background: '$gray900',
+          justifyContent: 'center',
+          alignItems: 'center',
           overflow: 'auto',
-          '&::-webkit-scrollbar': {
-            width: '0px',
-            background: '$transparent',
-          },
+          backgroundImage: 'radial-gradient(#131313 1px, transparent 0)',
+          backgroundSize: '8px 8px',
+          backgroundPosition: '-19px -19px',
+          position: 'relative',
         }}
       >
-        <Editable
-          size="lg"
-          weight="semibold"
-          placeholder="Insert title..."
-          css={{ paddingLeft: '$sm' }}
-          onBlur={({ currentTarget }) =>
-            handlePageTitleUpdate(currentTarget?.textContent || '')
-          }
+        <NextLink passHref href="/pages">
+          <Flex
+            css={{
+              top: '16px',
+              left: '16px',
+              color: '$gray500',
+              cursor: 'pointer',
+              border: '1px solid $gray800',
+              padding: '$sm',
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transitionDuration: '0.2s',
+
+              '&:hover': {
+                border: '1px solid $gray700',
+              },
+            }}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.81809 4.18179C8.99383 4.35753 8.99383 4.64245 8.81809 4.81819L6.13629 7.49999L8.81809 10.1818C8.99383 10.3575 8.99383 10.6424 8.81809 10.8182C8.64236 10.9939 8.35743 10.9939 8.1817 10.8182L5.1817 7.81819C5.09731 7.73379 5.0499 7.61933 5.0499 7.49999C5.0499 7.38064 5.09731 7.26618 5.1817 7.18179L8.1817 4.18179C8.35743 4.00605 8.64236 4.00605 8.81809 4.18179Z"
+                fill="currentColor"
+                fillRule="evenodd"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Flex>
+        </NextLink>
+        <Flex
+          css={{
+            width: '100%',
+            height: '100%',
+            maxWidth: '720px',
+            padding: '$lg $md',
+            flexDirection: 'column',
+            gridGap: '$sm',
+            overflow: 'auto',
+            '&::-webkit-scrollbar': {
+              width: '0px',
+              background: '$transparent',
+            },
+          }}
         >
-          {pageTitle}
-        </Editable>
-        <PageBlocksRender
-          blocks={blocks}
-          focusedBlock={focusedBlock}
-          onInsertBlock={(blockIndex) => handleBlockInsert(blockIndex)}
-          onUpdateBlock={(block, value) => handleBlockChange(block, value)}
-          onDeleteBlock={(block) => handleBlockDelete(block)}
-          onFocusBlock={(block) => handleBlockFocus(block)}
-          onReorderBlocks={(newBlocks) => setBlocks(newBlocks)}
-        />
+          <Editable
+            size="lg"
+            weight="semibold"
+            placeholder="Insert title..."
+            css={{ paddingLeft: '$sm' }}
+            onBlur={({ currentTarget }) =>
+              handlePageTitleUpdate(currentTarget?.textContent || '')
+            }
+          >
+            {pageTitle}
+          </Editable>
+          <PageBlocksRender
+            blocks={blocks}
+            focusedBlock={focusedBlock}
+            onInsertBlock={(blockIndex) => handleBlockInsert(blockIndex)}
+            onUpdateBlock={(block, value) => handleBlockChange(block, value)}
+            onDeleteBlock={(block) => handleBlockDelete(block)}
+            onFocusBlock={(block) => handleBlockFocus(block)}
+            onReorderBlocks={(newBlocks) => setBlocks(newBlocks)}
+          />
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   );
 };
 
