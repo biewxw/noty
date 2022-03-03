@@ -7,6 +7,7 @@ export default class NotyDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel="shortcut icon" href="/assets/favicon.png" />
           <style
             id="stitches"
             dangerouslySetInnerHTML={{
