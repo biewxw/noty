@@ -59,10 +59,15 @@ const Pages: NextPage = () => {
             width: '100%',
             height: '100%',
             maxWidth: '720px',
-            padding: '$lg $md',
+            padding: '$md',
             flexDirection: 'column',
             gridGap: '$md',
             overflow: 'auto',
+
+            '@md': {
+              padding: '$lg $md',
+            },
+
             '&::-webkit-scrollbar': {
               width: '0px',
               background: '$transparent',
